@@ -8,7 +8,7 @@ final String title;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 45,
+      height: 55,
       child: Row(
         children: [
           Text(title, style: TextStyle(color: Colors.white, fontSize: 30)),
