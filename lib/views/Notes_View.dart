@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/views/Notes_body.dart';
+import 'package:todoapp/widgets/Notes_body.dart';
 import 'package:todoapp/widgets/Add_Note_Bottom_Sheet.dart';
 
 class NotesPage extends StatelessWidget {
