@@ -1,59 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/widgets/CustomButtom.dart';
-import 'package:todoapp/widgets/Custom_TextField.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:todoapp/cubits/add_note_cubit/add_note_cubit_cubit.dart';
+import 'package:todoapp/widgets/CustomForm.dart';
 
-class AddNoteBottomSheet extends StatefulWidget {
-  const AddNoteBottomSheet({super.key});
-
-  @override
-  State<AddNoteBottomSheet> createState() => _AddNoteBottomSheetState();
-}
-
-class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
-  final GlobalKey<FormState> formKey = GlobalKey();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  String? title, supTitle;
-
+class AddNoteBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          autovalidateMode: autovalidateMode,
-          child: Column(
-            children: [
-              SizedBox(height: 16),
-              CustomTextfield(
-                hint: "Title",
-                onSaved: (value) {
-                  title = value;
-                },
-              ),
-              SizedBox(height: 16),
-              CustomTextfield(
-                hint: "content",
-                maxLines: 5,
-                onSaved: (value) {
-                  supTitle = value;
-                },
-              ),
-              SizedBox(height: 64),
-              CustomButtom(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                  } else {
-                    autovalidateMode = AutovalidateMode.always;
-                  }
-                  setState(() {});
-                },
-              ),
-              SizedBox(height: 256),
-            ],
-          ),
-        ),
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: BlocConsumer<AddNoteCubit, AddNoteCubitState>(
+        listener: (context, state) {
+          if (state is AddNoteFailure) {
+            print("faidl ${state.errorMessage}");
+          }
+          if (state is AddNoteSuccess) {
+            Navigator.pop(context);
+          }
+        },
+        builder: (context, state) {
+          return ModalProgressHUD(
+            inAsyncCall: true,
+            // inAsyncCall: state is AddNoteLoading ? true : false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: SingleChildScrollView(child: CustomForm()),
+            ),
+          );
+        },
       ),
     );
   }
