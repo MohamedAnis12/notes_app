@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todoapp/cubits/add_note_cubit/add_note_cubit_cubit.dart';
 
 class CustomButtom extends StatelessWidget {
   const CustomButtom({super.key, this.onTap,  this.isLoading=false});

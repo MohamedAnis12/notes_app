@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:todoapp/cubits/add_note_cubit/add_note_cubit_cubit.dart';
-import 'package:todoapp/cubits/notes_cubit/notes_cubit.dart';
 import 'package:todoapp/models/note_model.dart';
 import 'package:todoapp/widgets/CustomButtom.dart';
 import 'package:todoapp/widgets/Custom_TextField.dart';
@@ -50,7 +50,7 @@ class _CustomFormState extends State<CustomForm> {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
                         var note = NoteModel(
-                          date: DateTime.now().toString(),
+                          date:DateFormat('MMM d, yyyy – hh:mm a').format(DateTime.now()),
                           title: title!,
                           supTitle: supTitle!,
                           color: Colors.blue.value,

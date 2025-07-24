@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:intl/intl.dart';
 import 'package:todoapp/constants.dart';
-import 'package:todoapp/cubits/add_note_cubit/add_note_cubit_cubit.dart';
 import 'package:todoapp/models/note_model.dart';
-import 'package:todoapp/simple_Bloc_observer.dart';
 import 'package:todoapp/views/Notes_View.dart';
 
 void main() async {
@@ -13,7 +11,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NoteModelAdapter());
 
-  // حذف البيانات لو في debug mode
+  // // حذف البيانات لو في debug mode
   // if (kDebugMode) {
   //   await Hive.deleteBoxFromDisk(kNotesBox);
   // }
@@ -29,7 +27,7 @@ void main() async {
     final testNote = NoteModel(
       title: "Test Note",
       supTitle: "This is a test subtitle",
-      date: DateTime.now().toString(),
+      date: DateFormat('MMM d, yyyy – hh:mm a').format(DateTime.now()),
       color: 0xFF42A5F5,
     );
     await box.add(testNote);
