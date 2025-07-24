@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -8,10 +9,37 @@ import 'package:todoapp/simple_Bloc_observer.dart';
 import 'package:todoapp/views/Notes_View.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Bloc.observer=SimpleBlocObserver();
   Hive.registerAdapter(NoteModelAdapter());
-  await Hive.openBox<NoteModel>(kNotesBox);
+
+  // حذف البيانات لو في debug mode
+  // if (kDebugMode) {
+  //   await Hive.deleteBoxFromDisk(kNotesBox);
+  // }
+
+  // فتح البوكس
+  var box = await Hive.openBox<NoteModel>(kNotesBox);
+
+  // ✅ طباعة عدد العناصر
+  print("✅ عدد النوتات داخل Hive: ${box.length}");
+
+  // ✅ لو فاضي، أضف نوتة تجريبية
+  if (box.isEmpty) {
+    final testNote = NoteModel(
+      title: "Test Note",
+      supTitle: "This is a test subtitle",
+      date: DateTime.now().toString(),
+      color: 0xFF42A5F5,
+    );
+    await box.add(testNote);
+    print("✅ تم إضافة نوتة تجريبية");
+  }
+
+  // ✅ طباعة كل النوتات
+  for (var note in box.values) {
+    print("📝 Note: ${note.title} - ${note.supTitle} - ${note.date}");
+  }
 
   runApp(const NoteApp());
 }
