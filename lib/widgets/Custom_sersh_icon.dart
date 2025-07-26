@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomSershIcon extends StatelessWidget {
-  const CustomSershIcon({super.key, required this.icon});
+  const CustomSershIcon({super.key, required this.icon, this.onTap});
   final IconData icon;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-      },
+      onTap:onTap,
       child: Container(
         height: 45,
         width: 45,

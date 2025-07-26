@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:todoapp/cubits/add_note_cubit/add_note_cubit_cubit.dart';
 import 'package:todoapp/models/note_model.dart';
+import 'package:todoapp/widgets/Color_listView.dart';
 import 'package:todoapp/widgets/CustomButtom.dart';
 import 'package:todoapp/widgets/Custom_TextField.dart';
 
@@ -39,18 +40,23 @@ class _CustomFormState extends State<CustomForm> {
               supTitle = value;
             },
           ),
-          SizedBox(height: 64),
+          SizedBox(height: 32),
+
+          ColorsListView(),
+          SizedBox(height: 32),
           BlocBuilder<AddNoteCubit, AddNoteCubitState>(
             builder: (context, state) {
               return BlocBuilder<AddNoteCubit, AddNoteCubitState>(
                 builder: (context, state) {
                   return CustomButtom(
-                    isLoading: state is AddNoteLoading? true:false,
+                    isLoading: state is AddNoteLoading ? true : false,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
                         var note = NoteModel(
-                          date:DateFormat('MMM d, yyyy – hh:mm a').format(DateTime.now()),
+                          date: DateFormat(
+                            'MMM d, yyyy – hh:mm a',
+                          ).format(DateTime.now()),
                           title: title!,
                           supTitle: supTitle!,
                           color: Colors.blue.value,

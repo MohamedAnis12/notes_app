@@ -13,7 +13,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NoteModelAdapter());
 
-  // // حذف البيانات لو في debug mode
+  // حذف البيانات لو في debug mode
   // if (kDebugMode) {
   //   await Hive.deleteBoxFromDisk(kNotesBox);
   // }
